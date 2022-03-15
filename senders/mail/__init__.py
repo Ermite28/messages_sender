@@ -1,0 +1,1 @@
+from .send_by_mail import SendByMail

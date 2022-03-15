@@ -59,11 +59,13 @@ Contributors names and contact info
     * Initial Release
 ## TODO
 
-- [ ] Add Mail senders
+- [ ] Add Mail senders ( In progress )
 - [ ] Add API senders
 - [ ] Handle markdown file
 - [ ] Handle json file
 - [ ] Use this tool as a tool or as a library
+- [ ] db / json gestion
+
 
 ## License
 

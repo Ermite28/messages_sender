@@ -28,3 +28,6 @@ class GetClientsData:
 
     def get_telegram(self, client_name):
         return self.get_any(client_name, data_type="Telegram")
+    
+    def get_mail(self, client_name):
+        return self.get_any(client_name, data_type="Mail")
