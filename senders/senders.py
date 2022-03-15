@@ -7,11 +7,10 @@ from .mail import SendByMail
 class Senders:
     @staticmethod
     def send(clients, message_file, config, methods):
-        if "telegram" in methods:
-            sender = SendByTelegram(config)
-            for client in clients:
+        for client in clients:
+            if "telegram" in methods:
+                sender = SendByTelegram(config)
                 sender.send_message(GetClientsData().get_telegram(client), MessageFactory.select(message_file).for_telegram())
-        if "mail" in methods:
-            sender = SendByMail(config)
-            for client in clients:
+            if "mail" in methods:
+                sender = SendByMail(config)
                 sender.send_message(GetClientsData().get_mail(client), MessageFactory.select(message_file).for_mail())
