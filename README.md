@@ -6,6 +6,9 @@ Send anythings anyhow.
 Usefull tool / library to send any messages in any file format with any vector.
 Architecture of the code was made to make easy to add a new file format or new way to send message.
 
+![pipeline](.doc/pipeline.png)
+
+
 ## Getting Started
 
 ### Dependencies
