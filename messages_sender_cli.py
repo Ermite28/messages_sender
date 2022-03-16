@@ -6,39 +6,6 @@ from configparser import ConfigParser
 import json
 
 
-class MessageSender:
-    def __init__(self, credentials, method=None, template=None, message=None):
-        self._set_credentials_parser(credentials)
-        self._method = None
-        if method:
-            self._set_method(method)
-        self._set_template(template)
-        self.message = message
-
-    def _set_method(self, method):
-        if method not in [cls.name for cls in SenderFactory.get_available_senders()]:
-            raise Exception(
-                f"""{method} is not an available send method.
-            Available methods are : {[cls.name for cls in SenderFactory.get_available_senders()]}"""
-            )
-        self._method = method
-
-    def _set_template(self, template):  # handle if file or Template
-        with open(template, "r") as f:
-            template = Template(f.read())
-        self._template = template
-
-    def _set_credentials_parser(self, credentials):
-        credentials_parser = ConfigParser()
-        credentials_parser.read_dict(credentials)
-        self._credentials_parser = credentials_parser
-
-    def send_message(self, contact, message=None):
-        if not message:
-            message = self.message
-        SenderFactory.send(contact, self._template, message, self._credentials_parser, self._method)
-
-
 @click.command()
 @click.option("--contact", help="client contact.")
 @click.option("--message", help="File with the contents to send.", type=click.Path(exists=True))

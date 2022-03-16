@@ -1,11 +1,17 @@
 # Messages Sender
+
+<p align="center">
+<a href="https://github.com/psf/black/blob/main/LICENSE"><img alt="License: MIT" src="https://black.readthedocs.io/en/stable/_static/license.svg"></a>
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+</p>
+
+
 Format and send a message following a template.
 
 ## Description
-Usefull  tool /library to send any messages in any file format with any vector.
-Architecture of the code was made to make easy to add a new file format or new way to send message.
+Message sender is a library which create a message to send from a python dictionnary and a Jinja template and send it by [the method of your choice](##Send methods available).
 
-![pipeline](.doc/pipeline.png)
+<img src=".doc/create_msg.svg" alt="pipeline" style="zoom:60%;" />
 
 
 ## Getting Started
@@ -22,55 +28,60 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Executing program
+### Use it
 
-```
-python send_message.py --client Benoit --file tests/test.txt --methods telegram
-```
-
-#### Credentials
-if using as a tool:
-.config in ini format:
-```ìni
-[TELEGRAM]
-api_id = your api_id
-api_hash = your api_hash
-```
-
-if using as a library
+example:
 ```python
-config = {"TELEGRAM":{"api_id":"your api id", "api_hash":"your api_hash"}} 
+from send_message import MessageSender
+credentials = {
+    "SMTP": {
+        "port": 465,
+        "password": "your_mail_password",
+        "sender_email": "your_mail",
+    },
+}
+method = "smtp"
+template = "templates/mail_template.jinja"
+message = {
+    "subject": "Test",
+    "core": "The results of your analyse are available.",
+    "results": {"link": "https://github.com/Ermite28/messages_sender", "label": "See the result"},
+    "greetings": "Best regards,\nBenoît de Witte",
+    "senders": {"info": "Ermite28, Belgium"},
+}
+MessageSender(credentials=credentials, method=method, template=template).send_message("your_email", message=message)
+
 ```
 
-## Help
 
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
 
-## Authors
-
-Contributors names and contact info
-
-[Benoît de Witte](https://www.linkedin.com/in/beno%C3%AEt-de-witte-05202b170/)
-
-## Version History
-
-* 0.1
-    * Initial Release
 ## TODO
 
-- [ ] Add Mail senders ( In progress )
-- [ ] Add API senders
-- [ ] Handle markdown file
-- [ ] Handle json file
-- [ ] Use this tool as a tool or as a library
-- [ ] db / json gestion
+- [ ] Maybe rethink about the library interface?
+- [ ] Make more example template
+- [ ] Handle mails attached files.
+- [ ] Better error handling.
+- [ ] Add unit test
+  - [ ] should it handle file (config, template, message)?
+
+## Send methods available
+
+:white_check_mark: Telegram
+
+:large_orange_diamond: SMTP (should handle attached files)
+
+:red_circle: Signal
+
+:red_circle: RSS
+
+:red_circle: SMS
+
+:red_circle: Discord bot
+
+
+:red_circle: message_senders API (futur project)
 
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
-
-## Acknowledgments
