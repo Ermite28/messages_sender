@@ -1,0 +1,8 @@
+{
+    "subject": "Test",
+    "core":"Les resultats sont arrives.",
+    "results" : {"link": "https://github.com/Ermite28/messages_sender",
+    "label": "Click for the code"},
+    "greetings": "Bonne journée,",
+    "senders": {"info": "Benoît de Witte, Belgium"}
+}

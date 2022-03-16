@@ -1,6 +1,8 @@
 from schematics.models import Model
 from schematics.types import IntType, StringType
 import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from .senders import Senders
 
 
@@ -17,10 +19,24 @@ class SendBySMTP(Senders):
         return credentials
 
     def _send(self, contact, formatted_message):
+        formatted_message["From"] = self.credentials.sender_email
+        formatted_message["To"] = contact
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL("smtp.gmail.com", self.credentials.port, context=context) as server:
             server.login(self.credentials.sender_email, self.credentials.password)
-            server.sendmail(self.credentials.sender_email, contact, formatted_message)
+            server.sendmail(self.credentials.sender_email, contact, formatted_message.as_string())
+
+    def _format_message(self, template, message):
+        mail = MIMEMultipart("alternative")
+        if "subject" in message:
+            mail["Subject"] = message["subject"]
+        text_part = message["core"]
+        html_part = super()._format_message(template, message)
+        part1 = MIMEText(text_part, "plain")
+        part2 = MIMEText(html_part, "html")
+        mail.attach(part1)
+        mail.attach(part2)
+        return mail
 
 
 class SMTPConfig(Model):
