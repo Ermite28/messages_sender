@@ -350,7 +350,13 @@
                     <tr>
                       <td>
                         <p>Hello,</p>
-                        <p>{{ message.core }}</p>
+                        {% if cores is defined %} {# Handle multi lines #}
+                            {% for message_line in cores %}
+                                <p>{{ message_line }}</p>
+                            {% endfor %}
+                        {% else %}
+                            <p>{{ core }}</p>
+                        {% endif %}
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>
@@ -358,7 +364,7 @@
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="{{ message.results.link }}" target="_blank">{{ message.results.label }}</a> </td>
+                                      <td> <a href="{{ results.link }}" target="_blank">{{ results.label }}</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -366,7 +372,7 @@
                             </tr>
                           </tbody>
                         </table>
-                        <p>{{ message.greetings }}</p>
+                        <p>{{ greetings }}</p>
                       </td>
                     </tr>
                   </table>
@@ -382,7 +388,7 @@
               <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="content-block">
-                    <span class="apple-link">{{ message.senders.info }}</span>
+                    <span class="apple-link">{{ senders.info }}</span>
                   </td>
                 </tr>
               </table>

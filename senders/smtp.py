@@ -1,45 +1,57 @@
-from schematics.models import Model
-from schematics.types import IntType, StringType
 import smtplib, ssl
+from pathlib import Path
+from email import encoders
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
 from .senders import Senders
 
 
 class SendBySMTP(Senders):
-    name = "smtp"
+    def __init__(self, sender_email, sender_password, port=465):
+        self.port = port
+        self.sender_email = sender_email
+        self.sender_password = sender_password
 
-    @staticmethod
-    def _set_credentials(config_parser):
-        credentials = SMTPConfig()
-        credentials.ports = config_parser.get("SMTP", "ports", fallback=465)
-        credentials.password = config_parser.get("SMTP", "password")
-        credentials.sender_email = config_parser.get("SMTP", "sender_email")
-        credentials.validate()
-        return credentials
+    def send(self, contact, message, template=None, **kwargs):  # Refactor
+        if template:
+            message = self._apply_template(template, message)
+            message = self._create_mail(contact, message, **kwargs)
+        self._send(contact, message, **kwargs)
 
-    def _send(self, contact, formatted_message):
-        formatted_message["From"] = self.credentials.sender_email
-        formatted_message["To"] = contact
-        context = ssl.create_default_context()
-        with smtplib.SMTP_SSL("smtp.gmail.com", self.credentials.port, context=context) as server:
-            server.login(self.credentials.sender_email, self.credentials.password)
-            server.sendmail(self.credentials.sender_email, contact, formatted_message.as_string())
-
-    def _format_message(self, template, message):
+    def _create_mail(self, contact, message, subject=None, simple_form=None, attached_files=None):
         mail = MIMEMultipart("alternative")
-        if "subject" in message:
-            mail["Subject"] = message["subject"]
-        text_part = message["core"]
-        html_part = super()._format_message(template, message)
-        part1 = MIMEText(text_part, "plain")
+        mail["Subject"] = subject
+        if simple_form:
+            text_part = simple_form
+            part1 = MIMEText(text_part, "plain")
+            mail.attach(part1)
+        html_part = message
         part2 = MIMEText(html_part, "html")
-        mail.attach(part1)
         mail.attach(part2)
-        return mail
+        if attached_files:
+            for attached_files in self._get_attached_files(message["attached_files"]):
+                mail.attach(attached_files)
+        mail["From"] = self.sender_email
+        mail["To"] = contact
+        return mail.as_string()
 
+    def _send(self, contact, mail, **kwargs):
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL("smtp.gmail.com", self.port, context=context) as server:
+            server.login(self.sender_email, self.sender_password)
+            server.sendmail(self.sender_email, contact, mail)
 
-class SMTPConfig(Model):
-    port = IntType(min_value=0, max_value=1023, default=465)
-    password = StringType()
-    sender_email = StringType()
+    def _get_attached_files(self, files):
+        attached_files = []
+        for f in files:
+            with open(f, "rb") as attachment:
+                part = MIMEBase("application", "octet_strem")
+                part.set_payload(attachment.read())
+            encoders.encode_base64(part)
+            part.add_header(
+                "Content-Disposition",
+                f"attachment; filename= {Path(f).name}",
+            )
+            attached_files.append(part)
+        return attached_files
