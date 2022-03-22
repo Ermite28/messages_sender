@@ -1,0 +1,8 @@
+LICENSE.md
+README.md
+setup.py
+messages_sender.egg-info/PKG-INFO
+messages_sender.egg-info/SOURCES.txt
+messages_sender.egg-info/dependency_links.txt
+messages_sender.egg-info/requires.txt
+messages_sender.egg-info/top_level.txt

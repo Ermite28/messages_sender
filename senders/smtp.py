@@ -22,6 +22,8 @@ class SendBySMTP(Senders):
     def _create_mail(self, contact, message, subject=None, simple_form=None, attached_files=None):
         mail = MIMEMultipart("alternative")
         mail["Subject"] = subject
+        mail["From"] = self.sender_email
+        mail["To"] = contact
         if simple_form:
             text_part = simple_form
             part1 = MIMEText(text_part, "plain")
@@ -32,8 +34,6 @@ class SendBySMTP(Senders):
         if attached_files:
             for attached_files in self._get_attached_files(message["attached_files"]):
                 mail.attach(attached_files)
-        mail["From"] = self.sender_email
-        mail["To"] = contact
         return mail.as_string()
 
     def _send(self, contact, mail, **kwargs):

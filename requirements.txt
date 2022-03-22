@@ -1,4 +1,3 @@
 Telethon==1.24.0
 click==8.0.4
-schematics==2.1.1
-pre-commit==2.17.0
+Jinja2==3.0.3
