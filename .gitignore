@@ -3,3 +3,5 @@ name.session
 .venv/
 .config.ini
 example_private.py
+build/
+.pytest_cache/
