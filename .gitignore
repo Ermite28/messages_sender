@@ -2,4 +2,4 @@ __pycache__
 name.session
 .venv/
 .config.ini
-test_lib_private.py
+example_private.py

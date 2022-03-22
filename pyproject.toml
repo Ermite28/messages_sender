@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "messages_sender"
+version = "0.1.0"
+description = "Message sender is a library which create a message to send from a python dictionnary and a Jinja template and send it by the method of your choice."
+authors = ["Ermite28 <benoitdewitte28@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+Telethon = "^1.24.0"
+Jinja2 = "^3.0.3"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+pytest = "^7.1.1"
+bump2version = "^1.0.1"
+toml = "^0.10.2"
+pre-commit = "^2.17.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

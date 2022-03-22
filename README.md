@@ -21,18 +21,14 @@ Message sender is a library which create a message to send from a python diction
 
 ### Installing
 ```bash
-git clone https://github.com/Ermite28/messages_sender
-cd messages_sender
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+pip install messages-sender
 ```
 
 ### Use it
 
 example:
 ```python
-from send_message import MessageSender
+from messages-sender import MessageSender
 credentials = {
     "SMTP": {
         "port": 465,
@@ -57,18 +53,20 @@ MessageSender(credentials=credentials, method=method, template=template).send_me
 
 ## TODO
 
-- [ ] Maybe rethink about the library interface?
+- [V] Maybe rethink about the library interface?
 - [ ] Make more example template
-- [ ] Handle mails attached files.
-- [ ] Better error handling.
+- [V] Handle mails attached files.
+- [] Better error handling.
 - [ ] Add unit test
-  - [ ] should it handle file (config, template, message)?
+- [V] should it handle file (config, template, message)? NO
 
 ## Send methods available
 
 :white_check_mark: Telegram
 
 :large_orange_diamond: SMTP (should handle attached files)
+
+:red_circle: local
 
 :red_circle: Signal
 
@@ -77,7 +75,6 @@ MessageSender(credentials=credentials, method=method, template=template).send_me
 :red_circle: SMS
 
 :red_circle: Discord bot
-
 
 :red_circle: message_senders API (futur project)
 

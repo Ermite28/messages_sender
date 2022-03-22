@@ -5,7 +5,7 @@ class Senders:
     def send(self, contact, message, template=None, **kwargs):
         if template:
             message = self._apply_template(template, message)
-        self._send(contact, message, **kwargs)
+        return self._send(contact, message, **kwargs)
 
     def _apply_template(self, template, message):
         return template.render(**message)
