@@ -8,7 +8,7 @@ from .senders import Senders
 
 
 class SendBySMTP(Senders):
-    def __init__(self, sender_email, sender_password, port=465):
+    def __init__(self, sender_email=None, sender_password=None, port=465):
         self.port = port
         self.sender_email = sender_email
         self.sender_password = sender_password
@@ -17,7 +17,7 @@ class SendBySMTP(Senders):
         if template:
             message = self._apply_template(template, message)
             message = self._create_mail(contact, message, **kwargs)
-        self._send(contact, message, **kwargs)
+        return self._send(contact, message, **kwargs)
 
     def _create_mail(self, contact, message, subject=None, simple_form=None, attached_files=None):
         mail = MIMEMultipart("alternative")

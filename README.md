@@ -11,7 +11,7 @@ Format and send a message following a template.
 ## Description
 Message sender is a library which create a message to send from a python dictionnary and a Jinja template and send it by [the method of your choice](##Send methods available).
 
-<img src=".doc/create_msg.svg" alt="pipeline" style="zoom:60%;" />
+<img src=".doc/create_message.svg" alt="pipeline" style="zoom:60%;" />
 
 
 ## Getting Started
@@ -53,18 +53,18 @@ MessageSender(credentials=credentials, method=method, template=template).send_me
 
 ## TODO
 
-- [V] Maybe rethink about the library interface?
+- [X] Maybe rethink about the library interface?
 - [ ] Make more example template
-- [V] Handle mails attached files.
-- [] Better error handling.
-- [ ] Add unit test
-- [V] should it handle file (config, template, message)? NO
+- [X] Handle mails attached files.
+- [ ] Better error handling.
+- [X] Add unit test
+- [X] should it handle file (config, template, message)? NO
 
 ## Send methods available
 
 :white_check_mark: Telegram
 
-:large_orange_diamond: SMTP (should handle attached files)
+:white_check_mark:  SMTP
 
 :red_circle: local
 
