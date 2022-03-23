@@ -4,6 +4,9 @@ version = "0.1.2"
 description = "Message sender is a library which create a message to send from a python dictionnary and a Jinja template and send it by the method of your choice."
 authors = ["Ermite28 <benoitdewitte28@gmail.com>"]
 license = "MIT"
+readme = "README.md"
+repository = "https://github.com/Ermite28/messages_sender"
+homepage = "https://github.com/Ermite28/messages_sender"
 
 [tool.poetry.dependencies]
 python = "^3.7"
