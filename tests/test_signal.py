@@ -16,4 +16,6 @@ class TestSignal:
 
         template = Template("Hello {{ contact_name }}.")
         monkeypatch.setattr(SendByTelegram, "_send", mock_send)
-        assert "Hello contact." == SendByTelegram().send("contact", message={"contact_name": "contact"}, template=template)
+        assert "Hello contact." == SendByTelegram().send(
+            "contact", message={"contact_name": "contact"}, template=template
+        )

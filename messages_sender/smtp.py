@@ -49,9 +49,6 @@ class SendBySMTP(Senders):
                 part = MIMEBase("application", "octet_strem")
                 part.set_payload(attachment.read())
             encoders.encode_base64(part)
-            part.add_header(
-                "Content-Disposition",
-                f"attachment; filename= {Path(f).name}",
-            )
+            part.add_header("Content-Disposition", f"attachment; filename= {Path(f).name}")
             attached_files.append(part)
         return attached_files

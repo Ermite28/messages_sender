@@ -26,29 +26,35 @@ pip install messages-sender
 
 ### Use it
 
-example:
+Simple example:
 ```python
-from messages-sender import MessageSender
-credentials = {
-    "SMTP": {
-        "port": 465,
-        "password": "your_mail_password",
-        "sender_email": "your_mail",
-    },
-}
-method = "smtp"
-template = "templates/mail_template.jinja"
-message = {
-    "subject": "Test",
-    "core": "The results of your analyse are available.",
-    "results": {"link": "https://github.com/Ermite28/messages_sender", "label": "See the result"},
-    "greetings": "Best regards,\nBenoît de Witte",
-    "senders": {"info": "Ermite28, Belgium"},
-}
-MessageSender(credentials=credentials, method=method, template=template).send_message("your_email", message=message)
+from messages_sender import SendBySMTP
 
+SendBySMTP(port=465, sender_password="password", sender_email="senders@yolo.com").send("receiver@yolo.com", message="Yo")
 ```
 
+Apply template
+```python
+from messages_sender import SendBySMTP
+from jinja2 import Template
+
+
+message = {
+    "messages": ["Hello,", "The results of your analyse are available. Please follow the link to dowload the results."],
+    "results": {"link": "https://github.com/Ermite28/messages_sender", "label": "⬇️ Get the results."},
+    "greetings": "Ciao",
+    "senders": {"info": "Ermite28"},
+}
+
+with open("templates/mail_template.j2") as template_file:
+    template = Template(template_file.read())
+
+SendBySMTP(port=465, sender_password="password", sender_email="senders@yolo.com").send(
+    "receiver@yolo.com", message=message, template=template
+)
+
+
+```
 
 
 ## TODO

@@ -333,7 +333,7 @@
     </style>
   </head>
   <body>
-    <span class="preheader">{{ message.core }}</span>
+    <span class="preheader">{{ message }}</span>
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
       <tr>
         <td>&nbsp;</td>
@@ -349,7 +349,6 @@
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <p>Hello,</p>
                         {% if messages is defined %} {# Handle multi lines #}
                             {% for message_line in messages %}
                                 <p>{{ message_line }}</p>
